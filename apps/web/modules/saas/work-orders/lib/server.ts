@@ -35,12 +35,13 @@ export const getWorkOrders = cache(async (): Promise<WorkOrder[]> => {
 				scope,
 				created_at,
 				updated_at
-			FROM work_orders
+			FROM public.work_orders
 			ORDER BY status_rank ASC NULLS LAST, created_at DESC
 		`;
 
 		return workOrders;
-	} catch {
+	} catch (error) {
+		console.error("Failed to load work orders.", error);
 		return [];
 	}
 });
@@ -59,18 +60,19 @@ export const getWorkOrderById = cache(
 					wo_number,
 					city,
 					status,
-					status_rank,
-					scope,
-					created_at,
-					updated_at
-				FROM work_orders
-				WHERE id = ${id}
-				LIMIT 1
-			`;
+				status_rank,
+				scope,
+				created_at,
+				updated_at
+			FROM public.work_orders
+			WHERE id = ${id}
+			LIMIT 1
+		`;
 
-			return workOrders[0] ?? null;
-		} catch {
-			return null;
-		}
-	},
+		return workOrders[0] ?? null;
+	} catch (error) {
+		console.error("Failed to load work order.", error);
+		return null;
+	}
+},
 );

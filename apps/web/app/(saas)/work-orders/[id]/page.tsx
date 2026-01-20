@@ -3,13 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { notFound } from "next/navigation";
 
 interface WorkOrderDetailsPageProps {
-	params: Promise<{ id: string }>;
+	params: { id: string };
 }
 
 export default async function WorkOrderDetailsPage({
 	params,
 }: WorkOrderDetailsPageProps) {
-	const { id } = await params;
+	const { id } = params;
 	const workOrder = await getWorkOrderById(id);
 
 	if (!workOrder) {

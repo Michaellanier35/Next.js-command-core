@@ -28,7 +28,12 @@ const COLUMN_LABELS: Record<WorkOrderStatus, string> = {
 	INVOICED_PENDING_PAYMENT: "Invoiced (pending payment)",
 };
 
-export default async function WorkOrdersPage() {
+export default async function WorkOrdersPage({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}) {
+	const { locale } = await params;
 	const workOrders = await getWorkOrders();
 	const columns = WORK_ORDER_STATUSES.map((status) => ({
 		status,
@@ -61,7 +66,7 @@ export default async function WorkOrdersPage() {
 							{column.orders.map((order) => (
 								<Link
 									key={order.id}
-									href={`/work-orders/${order.id}`}
+									href={`/${locale}/work-orders/${order.id}`}
 									className="block"
 								>
 									<Card className="transition hover:border-primary/40 hover:shadow-sm">

@@ -1,15 +1,16 @@
 import { getWorkOrderById } from "@saas/work-orders/lib/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface WorkOrderDetailsPageProps {
-	params: { id: string };
+	params: Promise<{ id: string; locale: string }>;
 }
 
 export default async function WorkOrderDetailsPage({
 	params,
 }: WorkOrderDetailsPageProps) {
-	const { id } = params;
+	const { id, locale } = await params;
 	const workOrder = await getWorkOrderById(id);
 
 	if (!workOrder) {
@@ -18,6 +19,12 @@ export default async function WorkOrderDetailsPage({
 
 	return (
 		<div className="flex flex-col gap-6">
+			<Link
+				href={`/${locale}/work-orders`}
+				className="text-sm font-medium text-muted-foreground hover:text-foreground"
+			>
+				← Back to work orders
+			</Link>
 			<div>
 				<h1 className="text-3xl font-semibold">Work Order Details</h1>
 				<p className="text-muted-foreground">WO #{workOrder.wo_number}</p>

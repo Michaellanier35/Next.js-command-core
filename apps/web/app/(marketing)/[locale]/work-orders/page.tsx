@@ -2,6 +2,10 @@ import { getWorkOrders } from "@saas/work-orders/lib/server";
 import { Card, CardContent } from "@ui/components/card";
 import Link from "next/link";
 
+interface WorkOrdersPageProps {
+	params: { locale: string };
+}
+
 const WORK_ORDER_STATUSES = [
 	"NEW_WORK_ORDERS",
 	"READY_FOR_DISPATCH",
@@ -28,7 +32,10 @@ const COLUMN_LABELS: Record<WorkOrderStatus, string> = {
 	INVOICED_PENDING_PAYMENT: "Invoiced (pending payment)",
 };
 
-export default async function WorkOrdersPage() {
+export default async function WorkOrdersPage({
+	params,
+}: WorkOrdersPageProps) {
+	void params;
 	const workOrders = await getWorkOrders();
 	const columns = WORK_ORDER_STATUSES.map((status) => ({
 		status,

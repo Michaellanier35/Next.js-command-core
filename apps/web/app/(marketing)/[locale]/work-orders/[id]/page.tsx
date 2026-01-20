@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { notFound } from "next/navigation";
 
 interface WorkOrderDetailsPageProps {
-	params: { id: string };
+	params: { id: string; locale: string };
 }
 
 export default async function WorkOrderDetailsPage({
